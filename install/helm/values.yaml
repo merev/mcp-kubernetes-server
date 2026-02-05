@@ -1,0 +1,84 @@
+# Default values for mcp-kubernetes-server (v1 - read-only).
+replicaCount: 1
+
+image:
+  repository: your-registry/mcp-kubernetes-server
+  tag: "dev"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+  annotations: {}
+
+server:
+  # transport: stdio | sse | streamable-http
+  transport: streamable-http
+  host: "0.0.0.0"
+  port: 8000
+
+  # Feature flags mapped to server CLI options (server.go)
+  disableKubectl: false
+  disableHelm: false
+  # By default v1 is read-only at the server level as well.
+  disableWrite: true
+  disableDelete: true
+
+  # Extra args appended to entrypoint (array of individual flags, e.g. ["--log-level=debug"])
+  extraArgs: []
+
+resources: {}
+# resources:
+#   limits:
+#     cpu: 200m
+#     memory: 256Mi
+#   requests:
+#     cpu: 50m
+#     memory: 64Mi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+podAnnotations: {}
+podLabels: {}
+
+# Probes
+livenessProbe:
+  enabled: true
+  path: /healthz
+  port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+readinessProbe:
+  enabled: true
+  path: /readyz
+  port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# ServiceAccount and RBAC
+serviceAccount:
+  create: true
+  name: ""
+
+rbac:
+  create: true
+  # profile: readonly | write | admin
+  profile: readonly
+
+ingress:
+  enabled: true
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
