@@ -1,6 +1,6 @@
 module github.com/merev/mcp-kubernetes-server
 
-go 1.25
+go 1.24.0
 
 require (
 	github.com/modelcontextprotocol/go-sdk v1.2.0
