@@ -1,0 +1,8 @@
+.git
+install/
+**/.idea
+**/*.tgz
+**/packages/
+**/node_modules/
+**/dist/
+**/bin/
