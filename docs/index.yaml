@@ -3,12 +3,12 @@ entries:
   mcp-kubernetes-server:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-02-05T15:40:09.637353+02:00"
+    created: "2026-02-05T18:40:34.610492+02:00"
     description: MCP Server for Kubernetes clusters
-    digest: 02954b16482affebf4ff94dbdf25ca2c673de37c9185e25cd293fa1d40aad13a
+    digest: 446a0e0821ed9fff42c77594caecdd14dd6ee7c810154a18654a9440c2270c86
     name: mcp-kubernetes-server
     type: application
     urls:
     - https://merev.github.io/mcp-kubernetes-server/mcp-kubernetes-server-1.0.0.tgz
     version: 1.0.0
-generated: "2026-02-05T15:40:09.636295+02:00"
+generated: "2026-02-05T18:40:34.609863+02:00"
