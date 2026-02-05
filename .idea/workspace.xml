@@ -29,6 +29,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "DefaultGoTemplateProperty": "Go File",
+    "KUBERNETES_SUPPRESS_CONFIG_CLUSTER_SUGGESTION": "true",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.GoLinterPluginOnboardingV2": "true",
     "RunOnceActivity.GoLinterPluginStorageMigration": "true",
