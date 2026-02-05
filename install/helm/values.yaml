@@ -1,4 +1,5 @@
 # Default values for mcp-kubernetes-server (v1 - read-only).
+
 replicaCount: 1
 
 image:
@@ -16,16 +17,19 @@ server:
   # transport: stdio | sse | streamable-http
   transport: streamable-http
   host: "0.0.0.0"
-  port: 8000
 
-  # Feature flags mapped to server CLI options (server.go)
+  # IMPORTANT: keep this aligned with service.targetPort
+  port: 8080
+
+  # Feature flags mapped to server CLI options
   disableKubectl: false
   disableHelm: false
-  # By default v1 is read-only at the server level as well.
+
+  # v1 is read-only
   disableWrite: true
   disableDelete: true
 
-  # Extra args appended to entrypoint (array of individual flags, e.g. ["--log-level=debug"])
+  # Extra args appended to entrypoint
   extraArgs: []
 
 resources: {}
@@ -44,7 +48,7 @@ affinity: {}
 podAnnotations: {}
 podLabels: {}
 
-# Probes
+# Health probes
 livenessProbe:
   enabled: true
   path: /healthz
@@ -73,12 +77,26 @@ rbac:
   # profile: readonly | write | admin
   profile: readonly
 
+# Ingress configuration
 ingress:
   enabled: true
+
+  # ingressClassName (e.g. nginx, traefik, alb)
+  className: ""
+
   annotations: {}
+
   hosts:
     - host: chart-example.local
       paths:
         - path: /
           pathType: Prefix
-  tls: []
+
+  # TLS configuration
+  tls:
+    enabled: false
+    items: []
+    # items:
+    #   - hosts:
+    #       - chart-example.local
+    #     secretName: mcp-kubernetes-server-tls

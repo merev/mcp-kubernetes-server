@@ -6,12 +6,14 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "mcp.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
+  {{- with .Values.ingress.annotations }}
   annotations:
-    {{- with .Values.ingress.annotations }}
-    {{ toYaml . | nindent 4 }}
-    {{- end }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
-  ingressClassName: {{ .Values.ingress.className | default "" }}
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
     - host: {{ .host }}
@@ -27,9 +29,13 @@ spec:
                   number: {{ $.Values.service.port }}
           {{- end }}
     {{- end }}
+
+  {{- if and .Values.ingress.tls.enabled .Values.ingress.tls.items }}
   tls:
-    {{- range .Values.ingress.tls }}
-    - hosts: {{ toYaml .hosts | nindent 6 }}
+    {{- range .Values.ingress.tls.items }}
+    - hosts:
+        {{- toYaml .hosts | nindent 8 }}
       secretName: {{ .secretName }}
     {{- end }}
+  {{- end }}
 {{- end }}
